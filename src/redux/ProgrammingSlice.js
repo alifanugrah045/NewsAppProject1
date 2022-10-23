@@ -1,29 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
-
-const URL = `https://newsapi.org/v2/everything?q=indonesia&sortBy=popularity&apiKey=62c2fe52b16d4245ada0559d58042c3a&pageSize=50`;
+const URL = "https://newsapi.org/v2/everything?q=programming&apiKey=62c2fe52b16d4245ada0559d58042c3a&pageSize=50";
 // const URL = "https://jsonplaceholder.typicode.com/posts"
 
 const initialState = {
-  dataArticles: [],
+  articlesProgramming: [],
   loading: false,
   status: "idle",
 };
-export const fetchArticles = createAsyncThunk("articles/fetchArticles", async () => {
+export const fetchArticles = createAsyncThunk("programming/fetchArticles", async () => {
   const response = await axios.get(URL);
   return response.data.articles;
   // console.log('response', response);
 });
-export const IndonesiaSlice = createSlice({
-  name: "articles",
+export const ProgrammingSlice = createSlice({
+  name: "programming",
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder.addCase(fetchArticles.fulfilled, (state, action) => {
-      state.dataArticles = state.dataArticles.concat(action.payload);
+      state.articlesProgramming = state.articlesProgramming.concat(action.payload);
       state.status = "succeeded";
       state.loading = false;
     });
@@ -40,4 +38,4 @@ export const IndonesiaSlice = createSlice({
   },
 });
 
-export default IndonesiaSlice.reducer;
+export default ProgrammingSlice.reducer;
